@@ -84,6 +84,8 @@ function addTip(){
  <div><label>Quartos</label><input class="r" type="number" min="0" inputmode="numeric"></div>
  <div><label>Banheiros</label><input class="b" type="number" min="0" inputmode="numeric"></div>
  </div>
+  <h4 style="margin:14px 0 0;font-size:.9rem">Acabamento</h4><div class="g"><div><label>Rodapé na sala</label><select class="rs"><option value="">Selecione</option><option>Sim</option><option>Não</option></select></div><div><label>Rodapé no quarto</label><select class="rq"><option value="">Selecione</option><option>Sim</option><option>Não</option></select></div><div><label>Cozinha</label><select class="ck"><option value="">Selecione</option><option>Cerâmica total</option><option>Rodapé</option></select></div><div><label>Banheiro</label><select class="cb"><option value="">Selecione</option><option>Cerâmica total</option><option>Rodapé</option></select></div><div><label>Ventilação do banheiro</label><select class="vb"><option value="">Selecione</option><option>Janela</option><option>Exaustor</option></select></div></div>
+ <h4 style="margin:14px 0 0;font-size:.9rem">Janelas por ambiente (quantidade)</h4><div class="g"><div><label>Sala</label><input class="js" type="number" min="0" inputmode="numeric"></div><div><label>Quartos (total)</label><input class="jq" type="number" min="0" inputmode="numeric"></div><div><label>Cozinha</label><input class="jc" type="number" min="0" inputmode="numeric"></div><div><label>Banheiros (total)</label><input class="jb" type="number" min="0" inputmode="numeric"></div><div><label>Área de serviço</label><input class="ja" type="number" min="0" inputmode="numeric"></div></div>
  <div class="chk">
  <label><input type="checkbox" class="v"> Possui varanda</label>
  <label><input type="checkbox" class="l"> Já vem com luminária</label>
@@ -96,7 +98,7 @@ function tips(){
  return [...document.querySelectorAll('.tip')].map((t,i)=>{
   t.querySelector('.num').textContent=i+1;
   return {q:+t.querySelector('.q').value||0,m:t.querySelector('.m').value,r:t.querySelector('.r').value,b:t.querySelector('.b').value,
-   v:t.querySelector('.v').checked,l:t.querySelector('.l').checked,x:t.querySelector('.x2').checked};
+   rs:t.querySelector('.rs').value,rq:t.querySelector('.rq').value,ck:t.querySelector('.ck').value,cb:t.querySelector('.cb').value,vb:t.querySelector('.vb').value,js:t.querySelector('.js').value,jq:t.querySelector('.jq').value,jc:t.querySelector('.jc').value,jb:t.querySelector('.jb').value,ja:t.querySelector('.ja').value,v:t.querySelector('.v').checked,l:t.querySelector('.l').checked,x:t.querySelector('.x2').checked};
  });
 }
 const sn=v=>v?'Sim':'Não';
@@ -104,7 +106,7 @@ function txt(){
  const t=tips(),tot=t.reduce((a,c)=>a+c.q,0);
  $('tot').textContent=tot;
  let s=`*NOVO CONTRATO PÓS-OBRA – CONCEITO SOLUÇÕES*\nObra: ${$('obra').value||'-'}\nCNPJ: ${$('cnpj').value||'-'}\nFechado por: ${$('resp').value||'-'}\nTotal de APs: ${tot}\n`;
- t.forEach((c,i)=>{s+=`\nTipo ${i+1}: ${c.q} AP(s) de ${c.m||'-'} m²\n- Quartos: ${c.r||'-'}\n- Banheiros: ${c.b||'-'}\n- Varanda: ${sn(c.v)}\n- Luminária inclusa: ${sn(c.l)}\n- Box incluso: ${sn(c.x)}\n`});
+ t.forEach((c,i)=>{s+=`\nTipo ${i+1}: ${c.q} AP(s) de ${c.m||'-'} m²\n- Quartos: ${c.r||'-'}\n- Banheiros: ${c.b||'-'}\n- Varanda: ${sn(c.v)}\n- Rodapé na sala: ${c.rs||'-'}\n- Rodapé no quarto: ${c.rq||'-'}\n- Cozinha: ${c.ck||'-'}\n- Banheiro: ${c.cb||'-'}\n- Ventilação do banheiro: ${c.vb||'-'}\n- Janelas: sala ${c.js||0} | quartos ${c.jq||0} | cozinha ${c.jc||0} | banheiros ${c.jb||0} | área de serviço ${c.ja||0}\n- Luminária inclusa: ${sn(c.l)}\n- Box incluso: ${sn(c.x)}\n`});
  if($('obs').value.trim())s+=`\nObs.: ${$('obs').value.trim()}\n`;
  return s;
 }
